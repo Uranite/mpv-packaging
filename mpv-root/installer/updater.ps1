@@ -342,7 +342,7 @@ function Check-GetFFmpeg() {
     [xml]$doc = Get-Content $file
     if ($doc.settings.getffmpeg -eq "unset") {
         Write-Host "FFmpeg doesn't exist. " -ForegroundColor Green -NoNewline
-        $result = Read-KeyOrTimeout "Proceed with downloading? [Y/n] (default=n)" "N"
+        $result = Read-KeyOrTimeout "Proceed with downloading? [y/N] (default=n)" "N"
         Write-Host ""
         if ($result -eq 'Y') {
             $get_ffmpeg = "true"
@@ -448,7 +448,7 @@ function Upgrade-Ytplugin {
     }
     else {
         Write-Host "ytdlp or youtube-dl doesn't exist. " -ForegroundColor Green -NoNewline
-        $result = Read-KeyOrTimeout "Proceed with downloading? [Y/n] (default=n)" "N"
+        $result = Read-KeyOrTimeout "Proceed with downloading? [y/N] (default=n)" "N"
         Write-Host ""
 
         if ($result -eq 'Y') {
@@ -544,6 +544,9 @@ function Read-KeyOrTimeout ($prompt, $key){
     }
     if ([System.Console]::KeyAvailable) {
         $response = [System.Console]::ReadKey($true).Key
+        if ($response -eq 'Enter') {
+            return $key
+        }
     }
     else {
         $response = $key
